@@ -1,23 +1,33 @@
+import Interval from "./Interval.js";
 export default class Slide {
+    container;
     slides;
     controls;
     currentElement;
     currentIndex;
-    constructor() {
-        this.controls = document.querySelector("#slides-controls");
+    interval;
+    time;
+    paused;
+    pausedTimeout;
+    constructor(time = 5000) {
+        this.container = document.querySelector("#slides");
         this.slides = [...document.querySelectorAll(".slide-item")];
+        this.controls = document.querySelector("#slides-controls");
         this.currentIndex = 0;
         this.currentElement = this.slides[this.currentIndex];
+        this.interval = null;
+        this.time = time;
+        this.paused = false;
+        this.pausedTimeout = null;
         this.init();
-        console.log(this);
     }
     createControls() {
         const prevButton = document.createElement("button");
         const nextButton = document.createElement("button");
         prevButton.innerText = "Previous slide";
         nextButton.innerText = "Next slide";
-        prevButton.addEventListener("click", () => this.prev());
-        nextButton.addEventListener("click", () => this.next());
+        prevButton.addEventListener("pointerup", () => this.prev());
+        nextButton.addEventListener("pointerup", () => this.next());
         return { prevButton, nextButton };
     }
     addControls() {
@@ -25,6 +35,8 @@ export default class Slide {
         if (this.controls) {
             this.controls.appendChild(prevButton);
             this.controls.appendChild(nextButton);
+            this.controls.addEventListener("pointerdown", () => this.pause());
+            this.controls.addEventListener("pointerup", () => this.resume());
         }
     }
     updateCurrent() {
@@ -34,8 +46,22 @@ export default class Slide {
             this.currentElement.classList.add("active");
         }
     }
+    auto(time) {
+        this.interval?.clear();
+        this.interval = new Interval(() => this.next(), time);
+    }
+    pause() {
+        this.pausedTimeout = setTimeout(() => {
+            this.paused = true;
+        }, 300);
+    }
+    resume() {
+        this.paused = false;
+        if (this.pausedTimeout)
+            clearTimeout(this.pausedTimeout);
+    }
     next() {
-        if (this.slides) {
+        if (this.slides && !this.paused) {
             const lenght = this.slides.length - 1;
             this.currentIndex < lenght
                 ? this.currentIndex++
@@ -45,7 +71,7 @@ export default class Slide {
         return this;
     }
     prev() {
-        if (this.slides) {
+        if (this.slides && !this.paused) {
             const lenght = this.slides.length - 1;
             this.currentIndex > 0
                 ? this.currentIndex--
@@ -56,6 +82,7 @@ export default class Slide {
     }
     init() {
         this.addControls();
+        this.auto(this.time);
     }
 }
 //# sourceMappingURL=Slide.js.map
