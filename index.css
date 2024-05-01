@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  margin: 20px;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+#slides {
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#slides-container {
+  display: grid;
+}
+
+#slides-container .slide-item {
+  grid-area: 1/1;
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+#slides-container .slide-item.active {
+  opacity: 1;
+}
+
+#slides-controls {}
