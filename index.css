@@ -19,6 +19,7 @@ h1 {
 }
 
 #slides {
+  display: grid;
   max-width: 800px;
   margin: 0 auto;
   border-radius: 4px;
@@ -26,6 +27,7 @@ h1 {
 }
 
 #slides-container {
+  grid-area: 1/1;
   display: grid;
 }
 
@@ -41,4 +43,14 @@ h1 {
   opacity: 1;
 }
 
-#slides-controls {}
+#slides-controls {
+  grid-area: 1/1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  opacity: 0;
+
+}
+
+#slides-controls>button {
+  cursor: pointer;
+}

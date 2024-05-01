@@ -1,3 +1,3 @@
 import Slide from "./Slide.js";
-const slide = new Slide().prev().prev();
+const slide = new Slide();
 //# sourceMappingURL=index.js.map
