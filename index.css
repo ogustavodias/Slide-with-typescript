@@ -24,6 +24,7 @@ h1 {
   margin: 0 auto;
   border-radius: 4px;
   overflow: hidden;
+  position: relative;
 }
 
 #slides-container {
@@ -53,4 +54,44 @@ h1 {
 
 #slides-controls>button {
   cursor: pointer;
+}
+
+#slides-time-bar {
+  position: absolute;
+  top: 8px;
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+  width: 100%;
+  height: 8px;
+  padding: 0 10px;
+  pointer-events: none;
+}
+
+#slides-time-bar>span {
+  flex: 1;
+  background-color: #888;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#slides-time-bar>span>span {
+  display: block;
+  transform: translateX(-101%);
+  height: 100%;
+  background-color: #fff;
+}
+
+#slides-time-bar>span>span.happen {
+  animation: loadTimeBar linear running;
+}
+
+#slides-time-bar>span>span.paused {
+  animation: loadTimeBar linear paused;
+}
+
+@keyframes loadTimeBar {
+  to {
+    transform: initial;
+  }
 }
